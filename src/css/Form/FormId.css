@@ -8,6 +8,7 @@
   box-shadow: 29px 30px 15px -3px rgba(0, 0, 0, 0.1);
   position: relative;
   padding-top: 4rem;
+  z-index: -1;
 }
 
 .satu {
