@@ -1,0 +1,201 @@
+.container-navbar-luar {
+  background-color: #533859;
+  width: 100%;
+}
+.container-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 15px 25px;
+}
+
+.logo img {
+  max-width: 100px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.font-logo {
+  font-size: 15px;
+  font-style: italic;
+}
+
+.kanan {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  gap: 2rem;
+}
+
+.kanan .search-container input {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+.kanan .search-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.kanan .button-daftar button {
+  background-color: #6242fc;
+  color: white;
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 20px;
+}
+.kanan .button-daftar button:hover {
+  background-color: #280031;
+}
+
+.search-container {
+  position: relative;
+  transition: 1s;
+}
+
+.search {
+  animation: slideDown 1s ease-in-out;
+}
+
+.iconSearch {
+  transition: all 1s;
+  transform: translateX(0);
+}
+
+.icon {
+  transform: translateX(-10px);
+}
+.hamburger-menu {
+  cursor: pointer;
+  font-size: 20px;
+}
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container-sidenav {
+  height: 100vh;
+  width: 30%;
+  background-color: #533859;
+  color: white;
+  padding: 10px 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: slideRIght 0.5s ease-in;
+}
+
+.close {
+  font-size: 25px;
+  cursor: pointer;
+  padding-bottom: 1rem;
+}
+
+.font-sideNav {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.promo-sidenav .promo {
+  display: flex;
+  gap: 10px;
+  line-height: 20px;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.button-sideNav {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  gap: 0.5rem;
+}
+.button-sideNav button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.button-sideNav .daftar-sideNav {
+  background-color: #6242fc;
+  color: white;
+}
+.button-sideNav .Masuk {
+  color: #280031;
+}
+.button-sideNav button:hover {
+  filter: contrast(80%);
+}
+@keyframes slideRIght {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .container-navbar {
+    flex-direction: start;
+  }
+
+  .font-logo {
+    display: none;
+  }
+  .kanan {
+    gap: 15px;
+  }
+  .container-sidenav {
+    width: 95%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .font-sideNav {
+    margin: 0.5rem;
+  }
+  .search {
+    animation: slideDown 1s ease-in-out;
+    position: absolute;
+    width: 100%;
+    top: 85%;
+    left: 7%;
+  }
+  .search-container {
+    position: static;
+  }
+  .container-navbar {
+    position: relative;
+  }
+  .container-navbar-luar {
+    overflow: hidden;
+  }
+
+  .active-search {
+    padding-bottom: 3rem;
+    transition: 1s;
+  }
+  .search input {
+    width: 75%;
+    text-align: center;
+    margin-top: 5px;
+    height: 25px;
+  }
+}

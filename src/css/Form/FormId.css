@@ -1,0 +1,127 @@
+.container-form {
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  color: #280031;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 29px 30px 15px -3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-top: 4rem;
+}
+
+.satu {
+  background-color: #6242fc;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-size: 30px;
+  border-radius: 50%;
+  font-family: monospace;
+  border: 5px solid white;
+}
+
+.form-title {
+  position: absolute;
+  top: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.container-form input {
+  padding: 15px;
+  width: 200px;
+  font-size: 15px;
+  text-align: center;
+  border-width: 1px;
+  border-color: #cccccc;
+  background-color: #ffffff;
+  color: #000000;
+  border-style: hidden;
+  border-radius: 9px;
+  margin-right: 0.5rem;
+  box-shadow: 0px 0px 3px rgba(66, 66, 66, 0.75);
+}
+.container-form input:focus {
+  outline: none;
+  background-color: white;
+}
+.container-form .Footer-form {
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.container-form-diamond {
+  margin-top: 2rem;
+}
+
+.item-list-diamond {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.item-list {
+  width: 120px;
+  padding: 0.5rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px black;
+  background-color: #f9f9f9;
+  text-align: center;
+  cursor: pointer;
+}
+
+.diamond-list {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.container-diamond {
+  width: 120px;
+  padding: 0.5rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px black;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.active-form {
+  background-color: #efe9ff;
+  border: 1px solid #6242fc;
+}
+.item-list-diamond button {
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .container-form input {
+    width: 85%;
+    height: 10px;
+    margin-left: 5px;
+    margin-bottom: 0.8rem;
+  }
+  .item-list-diamond {
+    overflow: scroll;
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+  }
+  .diamond-list {
+    justify-content: center;
+  }
+}

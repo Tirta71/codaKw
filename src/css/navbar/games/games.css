@@ -1,0 +1,38 @@
+body {
+  background-color: #24042f;
+}
+
+.container {
+  margin: 20px;
+  color: white;
+}
+
+.container-games {
+  width: 180px;
+  height: 250px;
+  text-align: center;
+  background-color: #333;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 5px 5px 10px white;
+  transition: 0.3s ease-in-out;
+}
+
+.gambar-games img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.title-games {
+  margin-top: 1rem;
+}
+
+.container-games:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.container-card a {
+  color: white;
+  text-decoration: none;
+}
