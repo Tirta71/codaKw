@@ -4,6 +4,7 @@ import "../css/mobile legends/ml.css";
 import GetIdForm from "../components/GetIdForm";
 import MyNavbar from "../components/navbar/MyNavbar";
 import LeftPage from "../components/Games/Mobile Legends/LeftPage";
+import FormDiamonds from "../components/Games/Mobile Legends/Form Diamonds/FormDiamonds";
 
 const MobileLegends = () => {
   return (
@@ -15,7 +16,7 @@ const MobileLegends = () => {
             <LeftPage />
           </div>
           <div className="right-page">
-            <GetIdForm />
+            <FormDiamonds />
           </div>
         </div>
       </div>

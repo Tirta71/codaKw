@@ -1,20 +1,40 @@
 import React, { useState } from "react";
 import "../../../../css/Form/FormId.css";
 import { itemList } from "../../../../data/ListDataDiamond";
-import DiamondList from "./DiamondList";
+
 import TwPass from "./TwPass";
 import WeeklyDiamond from "./WeeklyDiamond";
+import Pembayaran from "../Pembayaran/Pembayaran";
+import Pembelian from "../Pembelian/Pembelian";
+import DiamondItemList from "./DiamondList";
+import GetIdForm from "../../../GetIdForm";
 
 export default function FormDiamonds() {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDiamond, setSelectedDiamond] = useState(null);
+  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
+  const [serverId, setServerId] = useState("");
 
-  const handleCategoryChange = (category, e) => {
-    e.preventDefault();
+  const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    setSelectedDiamond(null); // Reset selected diamond when category changes
+  };
+
+  const handleSelectedDiamond = (diamond) => {
+    setSelectedDiamond(diamond);
+  };
+
+  const handleGetIdFormSubmit = (idData) => {
+    setUserId(idData.userId);
+    setServerId(idData.serverId);
   };
 
   return (
     <div className="container-form-diamond">
+      <div className="user-id">
+        <GetIdForm setUsername={setUsername} onSubmit={handleGetIdFormSubmit} />
+      </div>
       <div className="container-form">
         <div className="form-title">
           <span className="satu">2</span>
@@ -29,7 +49,7 @@ export default function FormDiamonds() {
                   selectedCategory === item.name ? "active-form" : ""
                 }`}
                 key={index}
-                onClick={(e) => handleCategoryChange(item.name, e)}
+                onClick={() => handleCategoryChange(item.name)}
               >
                 <img src={item.image} alt="" />
                 <span>{item.name}</span>
@@ -39,10 +59,27 @@ export default function FormDiamonds() {
         </div>
         <div className="pilih-item">
           <h3>Pilih Item</h3>
-          {selectedCategory === "Diamond" && <DiamondList />}
+          {selectedCategory === "Diamond" && (
+            <DiamondItemList
+              handleSelectedDiamond={handleSelectedDiamond}
+              selectedDiamond={selectedDiamond}
+            />
+          )}
           {selectedCategory === "Twilight Pass" && <TwPass />}
           {selectedCategory === "Weekly Diamond Pass" && <WeeklyDiamond />}
         </div>
+      </div>
+      <div className="pembayaran">
+        <Pembayaran selectedDiamond={selectedDiamond} />
+      </div>
+
+      <div className="Pembelian">
+        <Pembelian
+          selectedDiamond={selectedDiamond}
+          username={username}
+          userId={userId}
+          serverId={serverId}
+        />
       </div>
     </div>
   );

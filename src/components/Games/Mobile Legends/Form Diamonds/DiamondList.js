@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { DiamondList as DataDiamondList } from "../../../../data/DiamondsList";
 
-export default function DiamondItemList() {
+export default function DiamondItemList({ handleSelectedDiamond }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleItemClick = (index) => {
     setSelectedItem(index);
+    handleSelectedDiamond(DataDiamondList[index]); // Panggil fungsi handleSelectedDiamond dengan data diamond yang dipilih
   };
 
   return (
