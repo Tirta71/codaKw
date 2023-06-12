@@ -141,8 +141,17 @@
   box-shadow: 0 0 2px black;
   background-color: #f9f9f9;
   justify-content: space-between;
+  position: relative;
+  padding-bottom: 3rem;
 }
 
+.nama-bank {
+  position: absolute;
+  border-top: 1px solid silver;
+  width: 90%;
+  bottom: 10px;
+  padding-top: 10px;
+}
 .harga-pay {
   display: flex;
   flex-direction: column;
@@ -300,6 +309,10 @@
 }
 
 .username-id p:nth-child(4) span {
+  margin-left: 163px;
+  color: #280031;
+}
+.username-id p:nth-child(5) span {
   margin-left: 229px;
   color: #280031;
 }
@@ -383,9 +396,14 @@
   }
 
   .username-id p:nth-child(4) span {
+    margin-left: 16px;
+    color: #280031;
+  }
+  .username-id p:nth-child(5) span {
     margin-left: 71px;
     color: #280031;
   }
+
   .username-id {
     font-size: 15px;
   }

@@ -1,9 +1,13 @@
+// Pembayaran.js
 import React, { useState } from "react";
 
-export default function Pembayaran({ selectedDiamond }) {
+export default function Pembayaran({
+  selectedDiamond,
+  onMetodePembayaranChange,
+}) {
   const metodePembayaran = [
     {
-      nama: "DOKU ATM",
+      nama: "Bank Transfer",
       logo: "https://cdn1.codashop.com/S/content/common/images/mno/DOKU_ATM_ID_CHNL_LOGO.png",
     },
     {
@@ -16,6 +20,7 @@ export default function Pembayaran({ selectedDiamond }) {
 
   const handleMetodePembayaran = (nama) => {
     setMetodeAktif(nama);
+    onMetodePembayaranChange(nama); // Mengirim data metode pembayaran aktif ke komponen Pembelian
   };
 
   return (
@@ -25,8 +30,9 @@ export default function Pembayaran({ selectedDiamond }) {
           <span className="satu">3</span>
           <h2>Pembayaran</h2>
         </div>
-        <div className="container-pay">
-          {metodePembayaran.map((metode) => (
+        {metodePembayaran.map((metode) => (
+          <div className="container-pay">
+            <div className="border-pay"></div>
             <div
               className={`pay ${
                 metodeAktif === metode.nama ? "active-form" : ""
@@ -42,9 +48,13 @@ export default function Pembayaran({ selectedDiamond }) {
                   {selectedDiamond ? selectedDiamond.price.toLocaleString() : 0}
                 </strong>
               </div>
+
+              <div className="nama-bank">
+                {metodeAktif === metode.nama && <strong>{metode.nama}</strong>}
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

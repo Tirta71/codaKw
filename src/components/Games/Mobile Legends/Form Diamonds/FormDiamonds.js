@@ -15,6 +15,11 @@ export default function FormDiamonds() {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");
   const [serverId, setServerId] = useState("");
+  const [metodePembayaran, setMetodePembayaran] = useState("");
+
+  const handleMetodePembayaranChange = (metode) => {
+    setMetodePembayaran(metode);
+  };
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -71,19 +76,23 @@ export default function FormDiamonds() {
       </div>
 
       {selectedCategory && (
-        <div>
-          <div className="pembayaran">
-            <Pembayaran selectedDiamond={selectedDiamond} />
-          </div>
+        <div className="pembayaran">
+          <Pembayaran
+            selectedDiamond={selectedDiamond}
+            onMetodePembayaranChange={handleMetodePembayaranChange}
+          />
+        </div>
+      )}
 
-          <div className="Pembelian">
-            <Pembelian
-              selectedDiamond={selectedDiamond}
-              username={username}
-              userId={userId}
-              serverId={serverId}
-            />
-          </div>
+      {metodePembayaran && selectedDiamond && (
+        <div className="pembelian">
+          <Pembelian
+            selectedDiamond={selectedDiamond}
+            username={username}
+            userId={userId}
+            serverId={serverId}
+            metodePembayaran={metodePembayaran}
+          />
         </div>
       )}
     </div>

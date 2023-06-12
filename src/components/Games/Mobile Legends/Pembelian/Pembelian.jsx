@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import { v4 as uuidv4 } from "uuid";
+
 export default function Pembelian({
   selectedDiamond,
   username,
   userId,
   serverId,
+  metodePembayaran,
 }) {
   const [checkBox1, setCheckBox1] = useState(false);
   const [checkBox2, setCheckBox2] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [receiveEmail, setReceiveEmail] = useState(false);
-  const MySwal = withReactContent(Swal);
+  const navigate = useNavigate();
   const handleCheckBox1Change = () => {
     setCheckBox1(!checkBox1);
   };
@@ -32,19 +35,7 @@ export default function Pembelian({
   const handleBeliSekarang = (e) => {
     e.preventDefault();
     if (userId && serverId) {
-      MySwal.fire({
-        title: "Harap Tunggu...",
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        didOpen: () => {
-          MySwal.showLoading();
-          setTimeout(() => {
-            MySwal.close();
-            setShowModal(true);
-          }, 3000);
-        },
-      });
+      setShowModal(true);
     } else {
       Swal.fire({
         icon: "error",
@@ -60,14 +51,26 @@ export default function Pembelian({
 
   useEffect(() => {
     if (receiveEmail) {
-      // Kirim notifikasi atau lakukan aksi lainnya
       console.log("Menerima email promosi dan penawaran eksklusif");
     }
   }, [receiveEmail]);
 
   const submitModal = () => {
-    console.log(email);
+    const transactionId = uuidv4();
+    const data = {
+      email,
+      receiveEmail,
+      selectedDiamond,
+      username,
+      userId,
+      serverId,
+      metodePembayaran,
+      transactionId, // Tambahkan transactionId ke objek data
+    };
+
+    navigate("/games/mobile-legends/detail-pembayaran", { state: data });
   };
+
   return (
     <div className="container-pembelian">
       <div className="container-form">
@@ -132,12 +135,12 @@ export default function Pembelian({
 
             <div className="container-modal">
               <h2 className="h1-pembelian">
-                Mohon konfirmasi Username anda sudah benar.
+                Mohon konfirmasi Username Anda sudah benar.
               </h2>
               <div className="username-id">
                 {username && (
                   <p>
-                    Username: <span>{username} </span>{" "}
+                    Username: <span>{username}</span>
                   </p>
                 )}
 
@@ -150,10 +153,13 @@ export default function Pembelian({
                   </p>
                 )}
                 <p>
-                  Diamond: <span>{selectedDiamond?.jumlah} </span>
+                  Diamond: <span>{selectedDiamond?.jumlah}</span>
                 </p>
                 <p>
-                  Harga: <span>{selectedDiamond?.price.toLocaleString()} </span>
+                  Bayar Dengan : <span>{metodePembayaran}</span>
+                </p>
+                <p>
+                  Harga: <span>{selectedDiamond?.price.toLocaleString()}</span>
                 </p>
               </div>
 

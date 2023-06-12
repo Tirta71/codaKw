@@ -1,0 +1,48 @@
+.detail-pembayaran-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: white;
+  margin-top: 2rem;
+}
+
+.detail-pembayaran-item {
+  background-color: white;
+  color: #280031;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 300px;
+}
+
+.detail-pembayaran-item p:not(.detail-pembayaran-item strong) {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  font-size: 20px;
+  color: rgb(153, 150, 150);
+  font-size: 15px;
+}
+
+.detail-pembayaran-item p strong {
+  display: inline;
+  font-weight: bold;
+  color: initial;
+}
+
+.detail-pembayaran-item button {
+  background-color: #280031;
+  color: white;
+  border-radius: 20px;
+  padding: 1rem 0;
+}
+
+.detail-pembayaran-item button:hover {
+  background-color: white;
+  color: #280031;
+  cursor: pointer;
+}
