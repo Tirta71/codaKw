@@ -13,6 +13,7 @@ export default function FormDetailPembayaran() {
   );
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [status, setStatus] = useState(null);
+  const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
 
   useEffect(() => {
     let interval = null;
@@ -48,6 +49,12 @@ export default function FormDetailPembayaran() {
       await axios.post(url, { ...data, status: false });
 
       Swal.fire("Data berhasil dikirim!", "", "success");
+
+      // Delete local storage after successful payment
+      localStorage.removeItem("timer");
+      localStorage.removeItem("isPaid");
+
+      setIsPaymentSubmitted(true);
     } catch (error) {
       console.error("Error:", error);
       Swal.fire("Terjadi kesalahan saat mengirim data", "", "error");
@@ -188,7 +195,7 @@ export default function FormDetailPembayaran() {
               </p>
             )}
           </div>
-          {localStorage.getItem("isPaid") === null && (
+          {!isPaymentSubmitted && localStorage.getItem("isPaid") === null && (
             <button
               onClick={handleSudahBayar}
               disabled={
@@ -202,7 +209,9 @@ export default function FormDetailPembayaran() {
           <button onClick={handleLeavePage}>Leave Page</button>
         </div>
 
-        {localStorage.getItem("isPaid") === null && <LoadingAnimation />}
+        {!isPaymentSubmitted && localStorage.getItem("isPaid") === null && (
+          <LoadingAnimation />
+        )}
       </div>
     </>
   );
