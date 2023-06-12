@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 export default function Pembelian({
   selectedDiamond,
   username,
@@ -11,7 +12,7 @@ export default function Pembelian({
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [receiveEmail, setReceiveEmail] = useState(false);
-
+  const MySwal = withReactContent(Swal);
   const handleCheckBox1Change = () => {
     setCheckBox1(!checkBox1);
   };
@@ -31,7 +32,19 @@ export default function Pembelian({
   const handleBeliSekarang = (e) => {
     e.preventDefault();
     if (userId && serverId) {
-      setShowModal(true);
+      MySwal.fire({
+        title: "Harap Tunggu...",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        didOpen: () => {
+          MySwal.showLoading();
+          setTimeout(() => {
+            MySwal.close();
+            setShowModal(true);
+          }, 3000);
+        },
+      });
     } else {
       Swal.fire({
         icon: "error",
