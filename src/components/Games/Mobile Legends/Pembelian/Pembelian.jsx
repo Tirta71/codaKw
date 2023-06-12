@@ -153,7 +153,7 @@ export default function Pembelian({
                   Diamond: <span>{selectedDiamond?.jumlah} </span>
                 </p>
                 <p>
-                  Harga: <span>{selectedDiamond?.price} </span>
+                  Harga: <span>{selectedDiamond?.price.toLocaleString()} </span>
                 </p>
               </div>
 

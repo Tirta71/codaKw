@@ -285,17 +285,17 @@
 }
 
 .username-id p:nth-child(1) span {
-  margin-left: 200px;
+  margin-left: 197px;
   color: #280031;
 }
 
 .username-id p:nth-child(2) span {
-  margin-left: 265px;
+  margin-left: 263px;
   color: #280031;
 }
 
 .username-id p:nth-child(3) span {
-  margin-left: 206px;
+  margin-left: 205px;
   color: #280031;
 }
 
@@ -368,17 +368,17 @@
     width: 80%;
   }
   .username-id p:nth-child(1) span {
-    margin-left: 48px;
+    margin-left: 45px;
     color: #280031;
   }
 
   .username-id p:nth-child(2) span {
-    margin-left: 103px;
+    margin-left: 100px;
     color: #280031;
   }
 
   .username-id p:nth-child(3) span {
-    margin-left: 53px;
+    margin-left: 51px;
     color: #280031;
   }
 
@@ -388,5 +388,10 @@
   }
   .username-id {
     font-size: 15px;
+  }
+  .total-pembayaran p span {
+    color: #ff7f98;
+    font-size: 20px;
+    margin-left: 0;
   }
 }
