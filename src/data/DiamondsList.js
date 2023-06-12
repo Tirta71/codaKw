@@ -57,7 +57,7 @@ export const DiamondList = [
     image:
       "https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/100x100/150orMore_MLBB_Diamonds.png",
     jumlah: 240,
-    price: 48.5,
+    price: 48500,
   },
   {
     image:
