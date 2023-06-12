@@ -69,18 +69,23 @@ export default function FormDiamonds() {
           {selectedCategory === "Weekly Diamond Pass" && <WeeklyDiamond />}
         </div>
       </div>
-      <div className="pembayaran">
-        <Pembayaran selectedDiamond={selectedDiamond} />
-      </div>
 
-      <div className="Pembelian">
-        <Pembelian
-          selectedDiamond={selectedDiamond}
-          username={username}
-          userId={userId}
-          serverId={serverId}
-        />
-      </div>
+      {selectedCategory && (
+        <div>
+          <div className="pembayaran">
+            <Pembayaran selectedDiamond={selectedDiamond} />
+          </div>
+
+          <div className="Pembelian">
+            <Pembelian
+              selectedDiamond={selectedDiamond}
+              username={username}
+              userId={userId}
+              serverId={serverId}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

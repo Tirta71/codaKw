@@ -105,17 +105,48 @@ export default function Pembelian({
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Konfirmasi Pembelian</h2>
-            <p>Anda telah memilih:</p>
-            <p>Email : {email}</p>
-            <p>Diamond: {selectedDiamond?.jumlah}</p>
-            <p>Harga: {selectedDiamond?.price}</p>
-            {username && <p>Username: {username}</p>}
-            {userId && <p>User ID: {userId}</p>}
-            {serverId && <p>Server ID: {serverId}</p>}
-            <div className="button-pembelian">
-              <button onClick={closeModal}>Tutup</button>
-              <button onClick={submitModal}>Bayar</button>
+            <div className="title-modal">
+              <h1>Detail Pesanan</h1>
+            </div>
+
+            <div className="container-modal">
+              <h2 className="h1-pembelian">
+                Mohon konfirmasi Username anda sudah benar.
+              </h2>
+              <div className="username-id">
+                {username && (
+                  <p>
+                    Username: <span>{username} </span>{" "}
+                  </p>
+                )}
+
+                {userId && serverId && (
+                  <p>
+                    ID:
+                    <span>
+                      {userId}({serverId})
+                    </span>
+                  </p>
+                )}
+                <p>
+                  Diamond: <span>{selectedDiamond?.jumlah} </span>
+                </p>
+                <p>
+                  Harga: <span>{selectedDiamond?.price} </span>
+                </p>
+              </div>
+
+              <div className="total-pembayaran">
+                <p>
+                  Total Pembayaran{" "}
+                  <span>Rp. {selectedDiamond?.price.toLocaleString()}</span>
+                </p>
+              </div>
+
+              <div className="button-pembelian">
+                <button onClick={closeModal}>Batalkan</button>
+                <button onClick={submitModal}>Konfirm</button>
+              </div>
             </div>
           </div>
         </div>
