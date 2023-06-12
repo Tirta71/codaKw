@@ -326,7 +326,9 @@
     height: 10px;
     margin-left: 5px;
     margin-bottom: 0.8rem;
+    border: 1px solid black;
   }
+
   .item-list-diamond {
     overflow: scroll;
     margin-bottom: 2rem;

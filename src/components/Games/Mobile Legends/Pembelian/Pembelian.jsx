@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import Swal from "sweetalert2";
 export default function Pembelian({
   selectedDiamond,
   username,
@@ -30,7 +30,15 @@ export default function Pembelian({
 
   const handleBeliSekarang = (e) => {
     e.preventDefault();
-    setShowModal(true);
+    if (userId && serverId) {
+      setShowModal(true);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "User ID dan Zone ID harus di isi",
+      });
+    }
   };
 
   const closeModal = () => {
