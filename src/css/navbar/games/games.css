@@ -2,6 +2,12 @@ body {
   background-color: #24042f;
 }
 
+@font-face {
+  font-family: "Noto Sans";
+  src: url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@800&display=swap");
+  font-style: normal;
+}
+
 .container {
   margin: 20px;
   color: white;
@@ -14,8 +20,10 @@ body {
   background-color: #333;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 5px 5px 10px white;
   transition: 0.3s ease-in-out;
+}
+.title {
+  font-family: Noto Sans, sans-serif;
 }
 
 .gambar-games img {
