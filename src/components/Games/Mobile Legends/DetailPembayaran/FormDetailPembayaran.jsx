@@ -4,6 +4,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "./FormDetail.css";
 import LoadingAnimation from "../../../Loading/LoadingSpinner";
+import DetailPembayaranItem from "./DetailPembayaranItem";
+import FormNotifPembayaran from "./FormNotifPembayaran";
 
 export default function FormDetailPembayaran() {
   const location = useLocation();
@@ -14,6 +16,7 @@ export default function FormDetailPembayaran() {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [status, setStatus] = useState(null);
   const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
+  const [randomDecimal, setRandomDecimal] = useState(0);
 
   useEffect(() => {
     let interval = null;
@@ -46,15 +49,17 @@ export default function FormDetailPembayaran() {
 
     try {
       const url = "https://64872d74beba629727902d80.mockapi.io/mobile-legend";
-      await axios.post(url, { ...data, status: false });
+      await axios.post(url, {
+        ...data,
+        isPaymentSubmitted: true,
+        status: false,
+      });
 
       Swal.fire("Data berhasil dikirim!", "", "success");
 
       // Delete local storage after successful payment
       localStorage.removeItem("timer");
       localStorage.removeItem("isPaid");
-
-      setIsPaymentSubmitted(true);
     } catch (error) {
       console.error("Error:", error);
       Swal.fire("Terjadi kesalahan saat mengirim data", "", "error");
@@ -95,6 +100,7 @@ export default function FormDetailPembayaran() {
 
         if (response.data.length > 0) {
           setStatus(response.data[0].status);
+          setIsPaymentSubmitted(response.data[0].isPaymentSubmitted);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -126,57 +132,66 @@ export default function FormDetailPembayaran() {
     };
   }, []);
 
+  useEffect(() => {
+    const generateRandomDecimal = () => {
+      const randomDecimal = Math.floor(Math.random() * 1000);
+      return randomDecimal.toString().padStart(3, "0");
+    };
+
+    const randomDecimalValue = generateRandomDecimal();
+    setRandomDecimal(randomDecimalValue);
+  }, []);
+
+  const addRandomDecimal = (price) => {
+    const priceWithoutDecimal = Math.floor(price / 1000);
+    return `${priceWithoutDecimal}.${randomDecimal}`;
+  };
+
   return (
     <>
       <div className="detail-pembayaran-container">
         <h2 className="detail-pembayaran-title">Detail Pembayaran</h2>
         <div className="detail-pembayaran-item">
-          <p>
-            Transaction ID <strong>{data.transactionId}</strong>
-          </p>
+          <DetailPembayaranItem
+            label="Transaction ID"
+            value={data.transactionId}
+          />
           {data.email && (
-            <p>
-              Email <strong>{data.email}</strong>
-            </p>
+            <DetailPembayaranItem label="Email" value={data.email} />
           )}
-          <p>
-            Receive Email <strong>{data.receiveEmail ? "Yes" : "No"}</strong>
-          </p>
-          <p>
-            Selected Diamond{" "}
-            <strong>{data.selectedDiamond?.jumlah} Diamond</strong>
-          </p>
-          <p>
-            Username <strong>{data.username}</strong>
-          </p>
-          <p>
-            UserID <strong>{data.userId}</strong>
-          </p>
-          <p>
-            ServerID <strong> {data.serverId}</strong>
-          </p>
-          <p>
-            Metode Pembayaran <strong>{data.metodePembayaran}</strong>
-          </p>
-          <p>
-            Bank <strong>BCA : 8720649366</strong> <strong>TIRTA SAMARA</strong>
-          </p>
-
-          <p>
-            Total Harga :{" "}
-            <strong>{data.selectedDiamond?.price.toLocaleString()}</strong>
-          </p>
+          <DetailPembayaranItem
+            label="Receive Email"
+            value={data.receiveEmail ? "Yes" : "No"}
+          />
+          <DetailPembayaranItem
+            label="Selected Diamond"
+            value={`${data.selectedDiamond?.jumlah} Diamond`}
+          />
+          <DetailPembayaranItem label="Username" value={data.username} />
+          <DetailPembayaranItem label="UserID" value={data.userId} />
+          <DetailPembayaranItem label="ServerID" value={data.serverId} />
+          <DetailPembayaranItem
+            label="Metode Pembayaran"
+            value={data.metodePembayaran}
+          />
+          <DetailPembayaranItem
+            label="Bank"
+            value="BCA : 8720649366 TIRTA SAMARA"
+          />
+          <DetailPembayaranItem
+            label="Total Harga"
+            value={addRandomDecimal(
+              data.selectedDiamond.price
+            ).toLocaleString()}
+          />
 
           {status === false && (
-            <p>
-              Status:<strong> Pending</strong>
-            </p>
+            <DetailPembayaranItem label="Status" value="Pending" />
           )}
           {status === true && (
-            <p>
-              Status: <strong>Success</strong>
-            </p>
+            <DetailPembayaranItem label="Status" value="Success" />
           )}
+
           <p>
             <br />
             Jangan meninggalkan page untuk melihat status anda
@@ -185,8 +200,12 @@ export default function FormDetailPembayaran() {
           </p>
 
           <div className="timer-container">
-            {isTimerRunning ? (
-              <p>Waktu Tersisa: {formatTime(timer)}</p>
+            {isTimerRunning && !isPaymentSubmitted ? (
+              <p
+                style={{ fontSize: "20px", fontWeight: "bold", color: "black" }}
+              >
+                Waktu Tersisa: {formatTime(timer)}
+              </p>
             ) : (
               <p>
                 Harap Tunggu Admin sedang mengecek pesanan anda
@@ -195,7 +214,7 @@ export default function FormDetailPembayaran() {
               </p>
             )}
           </div>
-          {!isPaymentSubmitted && localStorage.getItem("isPaid") === null && (
+          {!isPaymentSubmitted && (
             <button
               onClick={handleSudahBayar}
               disabled={
@@ -209,8 +228,11 @@ export default function FormDetailPembayaran() {
           <button onClick={handleLeavePage}>Leave Page</button>
         </div>
 
-        {!isPaymentSubmitted && localStorage.getItem("isPaid") === null && (
-          <LoadingAnimation />
+        {!isPaymentSubmitted && (
+          <>
+            <FormNotifPembayaran />
+            <LoadingAnimation />
+          </>
         )}
       </div>
     </>

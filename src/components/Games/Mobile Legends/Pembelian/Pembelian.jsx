@@ -65,7 +65,7 @@ export default function Pembelian({
       userId,
       serverId,
       metodePembayaran,
-      transactionId, // Tambahkan transactionId ke objek data
+      transactionId,
     };
 
     navigate("/games/mobile-legends/detail-pembayaran", { state: data });

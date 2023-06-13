@@ -1,0 +1,36 @@
+.form-notif-pembayaran {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  color: black;
+  width: 500px;
+  border-radius: 20px;
+}
+
+.transfer-instructions {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.transfer-instructions li {
+  margin-bottom: 10px;
+}
+
+.form-notif-pembayaran p:nth-child(1) {
+  color: red;
+}
+
+.container-notif {
+  margin-top: 1rem;
+}
+
+.container-notif span {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .form-notif-pembayaran {
+    width: 70%;
+  }
+}
