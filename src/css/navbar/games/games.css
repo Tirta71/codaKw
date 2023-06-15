@@ -44,3 +44,24 @@ body {
   color: white;
   text-decoration: none;
 }
+
+.container-card {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .container-card {
+    width: 100%;
+    overflow: hidden;
+    gap: 1rem;
+  }
+  .container-games {
+    width: 100px;
+    height: auto;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-radius: 10px;
+  }
+}

@@ -11,7 +11,9 @@ export default function FormDetailPembayaran() {
   const location = useLocation();
   const data = location.state;
   const [timer, setTimer] = useState(
-    localStorage.getItem("timer") ? Number(localStorage.getItem("timer")) : 600
+    sessionStorage.getItem("timer")
+      ? Number(sessionStorage.getItem("timer"))
+      : 600
   );
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [status, setStatus] = useState(null);
@@ -21,30 +23,28 @@ export default function FormDetailPembayaran() {
   useEffect(() => {
     let interval = null;
 
-    if (isTimerRunning) {
+    if (isTimerRunning && !isPaymentSubmitted && timer > 0) {
       interval = setInterval(() => {
         setTimer((prevTimer) => {
           const newTimer = prevTimer - 1;
-          localStorage.setItem("timer", newTimer.toString());
+          sessionStorage.setItem("timer", newTimer.toString());
           return newTimer;
         });
       }, 1000);
     }
 
-    if (timer === 0) {
+    if ((!isTimerRunning && isPaymentSubmitted) || timer <= 0) {
       clearInterval(interval);
-      localStorage.removeItem("timer");
-      localStorage.removeItem("isPaid");
+      sessionStorage.removeItem("timer");
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [timer, isTimerRunning]);
+  }, [timer, isTimerRunning, isPaymentSubmitted]);
 
   const handleSudahBayar = async () => {
     setIsTimerRunning(false);
-    localStorage.setItem("isPaid", "true");
     Swal.fire("Pembayaran sudah selesai", "", "success");
 
     try {
@@ -53,13 +53,13 @@ export default function FormDetailPembayaran() {
         ...data,
         isPaymentSubmitted: true,
         status: false,
+        totalBayar: addRandomDecimal(
+          data.selectedDiamond.price
+        ).toLocaleString(),
       });
 
+      setIsPaymentSubmitted(true);
       Swal.fire("Data berhasil dikirim!", "", "success");
-
-      // Delete local storage after successful payment
-      localStorage.removeItem("timer");
-      localStorage.removeItem("isPaid");
     } catch (error) {
       console.error("Error:", error);
       Swal.fire("Terjadi kesalahan saat mengirim data", "", "error");
@@ -77,20 +77,10 @@ export default function FormDetailPembayaran() {
   };
 
   const handleLeavePage = () => {
-    localStorage.removeItem("timer");
-    localStorage.removeItem("isPaid");
-
     Swal.fire("Leaving the page...", "", "info").then((result) => {
       if (result.isConfirmed) window.location.href = "/";
     });
   };
-
-  useEffect(() => {
-    const isPaid = localStorage.getItem("isPaid");
-    if (isPaid === "true") {
-      setIsTimerRunning(false);
-    }
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,22 +107,6 @@ export default function FormDetailPembayaran() {
   }, [data.transactionId]);
 
   useEffect(() => {
-    // Handle event when the tab is being closed
-    const handleTabClose = () => {
-      localStorage.removeItem("timer");
-      localStorage.removeItem("isPaid");
-    };
-
-    // Add event listener to window beforeunload event
-    window.addEventListener("beforeunload", handleTabClose);
-
-    return () => {
-      // Remove event listener when component is unmounted
-      window.removeEventListener("beforeunload", handleTabClose);
-    };
-  }, []);
-
-  useEffect(() => {
     const generateRandomDecimal = () => {
       const randomDecimal = Math.floor(Math.random() * 1000);
       return randomDecimal.toString().padStart(3, "0");
@@ -146,6 +120,12 @@ export default function FormDetailPembayaran() {
     const priceWithoutDecimal = Math.floor(price / 1000);
     return `${priceWithoutDecimal}.${randomDecimal}`;
   };
+
+  useEffect(() => {
+    if (isPaymentSubmitted) {
+      setIsTimerRunning(false);
+    }
+  }, [isPaymentSubmitted]);
 
   return (
     <>
@@ -179,14 +159,18 @@ export default function FormDetailPembayaran() {
             value="BCA : 8720649366 TIRTA SAMARA"
           />
           <DetailPembayaranItem
-            label="Total Harga"
-            value={addRandomDecimal(
+            label="Total Bayar"
+            value={`Rp ${addRandomDecimal(
               data.selectedDiamond.price
-            ).toLocaleString()}
+            ).toLocaleString()}`}
           />
 
           {status === false && (
-            <DetailPembayaranItem label="Status" value="Pending" />
+            <DetailPembayaranItem
+              label="Status"
+              value="Pending"
+              style={{ color: "yellow" }}
+            />
           )}
           {status === true && (
             <DetailPembayaranItem label="Status" value="Success" />
@@ -194,9 +178,9 @@ export default function FormDetailPembayaran() {
 
           <p>
             <br />
-            Jangan meninggalkan page untuk melihat status anda
+            Jangan meninggalkan halaman untuk melihat status pesanan Anda.
             <br />
-            leave page data anda hilang semua
+            Apabila Anda meninggalkan halaman, semua data akan terhapus.
           </p>
 
           <div className="timer-container">
@@ -208,24 +192,19 @@ export default function FormDetailPembayaran() {
               </p>
             ) : (
               <p>
-                Harap Tunggu Admin sedang mengecek pesanan anda
+                Harap tunggu. Admin sedang memeriksa pesanan Anda.
                 <br />
-                Proses 1 - 10 menit!!
+                Proses dapat memakan waktu 1-10 menit.
               </p>
             )}
           </div>
           {!isPaymentSubmitted && (
-            <button
-              onClick={handleSudahBayar}
-              disabled={
-                !isTimerRunning || localStorage.getItem("isPaid") === "true"
-              }
-            >
-              Sudah Bayar
-            </button>
+            <button onClick={handleSudahBayar}>Sudah Bayar</button>
           )}
 
-          <button onClick={handleLeavePage}>Leave Page</button>
+          {isPaymentSubmitted && (
+            <button onClick={handleLeavePage}>Leave Page</button>
+          )}
         </div>
 
         {!isPaymentSubmitted && (

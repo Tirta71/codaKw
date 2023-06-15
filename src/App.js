@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import MobileLegends from "./pages/Mobile Legends/MobileLegends";
 import DetailPembayaran from "./pages/Mobile Legends/DetailPembayaran";
+import AdminCek from "./Admin/AdminCek";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           element={<DetailPembayaran />}
         />
         <Route path="/" element={<Home />} />
+        <Route path="/admin-cek" element={<AdminCek />} />
       </Routes>
     </Router>
   );
