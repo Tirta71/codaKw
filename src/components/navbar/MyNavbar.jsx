@@ -54,9 +54,11 @@ export default function MyNavbar() {
                 </div>
               )}
             </div>
-            <div className="notification">
-              <FontAwesomeIcon icon={faBell} />
-            </div>
+            <Link to="/cek-status" style={{ color: "white" }}>
+              <div className="notification">
+                <FontAwesomeIcon icon={faBell} />
+              </div>
+            </Link>
             <div className="button-daftar">
               <button>Daftar</button>
             </div>

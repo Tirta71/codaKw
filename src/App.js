@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import MobileLegends from "./pages/Mobile Legends/MobileLegends";
 import DetailPembayaran from "./pages/Mobile Legends/DetailPembayaran";
 import AdminCek from "./Admin/AdminCek";
+import CekStatusPembayaran from "./components/Games/Cek status Pembayaran/CekStatusPembayaran";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         />
         <Route path="/" element={<Home />} />
         <Route path="/admin-cek" element={<AdminCek />} />
+        <Route path="/cek-status" element={<CekStatusPembayaran />} />
       </Routes>
     </Router>
   );

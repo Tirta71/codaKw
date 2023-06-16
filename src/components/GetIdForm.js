@@ -67,8 +67,11 @@ export default function GetIdForm({ setUsername, onSubmit }) {
         </form>
 
         {showUsername && (
-          <div className="username-info" style={{ marginTop: "2rem" }}>
-            <p>Username: {response?.data?.username}</p>
+          <div
+            className="username-info"
+            style={{ marginTop: "1rem", marginBottom: "1rem" }}
+          >
+            <p>Username: {response?.data?.username || "tidak ada"} </p>
           </div>
         )}
 

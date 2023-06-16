@@ -6,6 +6,7 @@ import "./FormDetail.css";
 import LoadingAnimation from "../../../Loading/LoadingSpinner";
 import DetailPembayaranItem from "./DetailPembayaranItem";
 import FormNotifPembayaran from "./FormNotifPembayaran";
+import MyNavbar from "../../../navbar/MyNavbar";
 
 export default function FormDetailPembayaran() {
   const location = useLocation();
@@ -19,6 +20,7 @@ export default function FormDetailPembayaran() {
   const [status, setStatus] = useState(null);
   const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
   const [randomDecimal, setRandomDecimal] = useState(0);
+  const baseUrl = "https://64872d74beba629727902d80.mockapi.io/mobile-legend";
 
   useEffect(() => {
     let interval = null;
@@ -48,8 +50,7 @@ export default function FormDetailPembayaran() {
     Swal.fire("Pembayaran sudah selesai", "", "success");
 
     try {
-      const url = "https://64872d74beba629727902d80.mockapi.io/mobile-legend";
-      await axios.post(url, {
+      await axios.post(baseUrl, {
         ...data,
         isPaymentSubmitted: true,
         status: false,
@@ -85,7 +86,7 @@ export default function FormDetailPembayaran() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `https://64872d74beba629727902d80.mockapi.io/mobile-legend?transactionId=${data.transactionId}`;
+        const url = `${baseUrl}?transactionId=${data.transactionId}`;
         const response = await axios.get(url);
 
         if (response.data.length > 0) {
@@ -129,6 +130,7 @@ export default function FormDetailPembayaran() {
 
   return (
     <>
+      <MyNavbar />
       <div className="detail-pembayaran-container">
         <h2 className="detail-pembayaran-title">Detail Pembayaran</h2>
         <div className="detail-pembayaran-item">
